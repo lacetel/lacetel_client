@@ -1,0 +1,135 @@
+<div class="container">
+
+  <button (click)="addSensorConfirmation()" mat-raised-button class="add"><mat-icon matPrefix svgIcon="plus"></mat-icon>Agregar Sensor</button>
+
+  <ng-container *ngIf="authsensors > 0">
+    <h3>Sensores autorizados</h3>
+    <table mat-table [dataSource]="authorized" multiTemplateDataRows class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>Identificador</th>
+        <td mat-cell *matCellDef="let element">
+          <span *ngIf="!element.editing">{{element.id}}</span>
+          <mat-form-field *ngIf="element.editing">
+            <input (keyup.esc)="cancelEdition(element)" matInput [(ngModel)]="element.id" type="text" name="username" placeholder="ID...">
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="lat">
+        <th mat-header-cell *matHeaderCellDef>Latitud</th>
+        <td mat-cell *matCellDef="let element"> {{element.lat || "--"}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="lon">
+        <th mat-header-cell *matHeaderCellDef>Longitud</th>
+        <td mat-cell *matCellDef="let element"> {{element.lon || "--"}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="val">
+        <th mat-header-cell *matHeaderCellDef>Último valor</th>
+        <td mat-cell *matCellDef="let element"> {{element.val || "--"}} dBm</td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastSeen">
+        <th mat-header-cell *matHeaderCellDef>Último registro</th>
+        <td mat-cell *matCellDef="let element"> {{element.lastSeen || "--"}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="columns.length">
+          <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+            <button *ngIf="!(element.editing && hasChanged(element))" (click)="editToggle(element)" mat-raised-button>
+              <mat-icon matPrefix svgIcon="pencil"></mat-icon> Editar
+            </button>
+            <ng-container *ngIf="element.editing && hasChanged(element)">
+              <button (click)="save(element)" mat-raised-button>
+                <mat-icon matPrefix svgIcon="content-save"></mat-icon> Guardar
+              </button>
+              <button (click)="cancelEdition(element)" mat-raised-button>
+                <mat-icon matPrefix svgIcon="close"></mat-icon> Cancelar
+              </button>
+            </ng-container>
+            <button (click)="deleteConfirmation(element)" mat-raised-button class="delete">
+              <mat-icon matPrefix svgIcon="close"></mat-icon> Eliminar sensor
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let element; columns: columns;"
+        class="element-row"
+        [class.expanded-row]="expandedElement === element"
+        (click)="expand($event, $event.target, element)">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+    </table>
+  </ng-container>
+
+  <ng-container *ngIf="unauthsensors > 0">
+    <h3>Sensores no autorizados</h3>
+    <table mat-table [dataSource]="unauthorized" multiTemplateDataRows class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>Identificador</th>
+        <td mat-cell *matCellDef="let element">
+          <span *ngIf="!element.editing">{{element.id}}</span>
+          <mat-form-field *ngIf="element.editing">
+            <input (keyup.esc)="cancelEdition(element)" matInput [(ngModel)]="element.id" type="text" name="username" placeholder="ID...">
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="lat">
+        <th mat-header-cell *matHeaderCellDef>Latitud</th>
+        <td mat-cell *matCellDef="let element"> {{element.lat || "--"}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="lon">
+        <th mat-header-cell *matHeaderCellDef>Longitud</th>
+        <td mat-cell *matCellDef="let element"> {{element.lon || "--"}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="val">
+        <th mat-header-cell *matHeaderCellDef>Último valor</th>
+        <td mat-cell *matCellDef="let element"> {{element.val || "--"}} dBm</td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastSeen">
+        <th mat-header-cell *matHeaderCellDef>Último registro</th>
+        <td mat-cell *matCellDef="let element"> {{element.lastSeen || "--"}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="columns.length">
+          <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+            <button *ngIf="!(element.editing && hasChanged(element))" (click)="editToggle(element)" mat-raised-button>
+              <mat-icon matPrefix svgIcon="pencil"></mat-icon> Editar
+            </button>
+            <ng-container *ngIf="element.editing && hasChanged(element)">
+              <button (click)="save(element)" mat-raised-button>
+                <mat-icon matPrefix svgIcon="content-save"></mat-icon> Guardar
+              </button>
+              <button (click)="cancelEdition(element)" mat-raised-button>
+                <mat-icon matPrefix svgIcon="close"></mat-icon> Cancelar
+              </button>
+            </ng-container>
+            <button (click)="authorize(element)" mat-raised-button>
+              <mat-icon matPrefix svgIcon="account-check"></mat-icon> Autorizar
+            </button>
+            <button (click)="deleteConfirmation(element)" mat-raised-button class="delete">
+              <mat-icon matPrefix svgIcon="close"></mat-icon> Eliminar sensor
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let element; columns: columns;"
+        class="element-row"
+        [class.expanded-row]="expandedElement === element"
+        (click)="expand($event, $event.target, element)">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+    </table>
+  </ng-container>
+</div>

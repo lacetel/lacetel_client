@@ -1,0 +1,56 @@
+<h1 mat-dialog-title>{{title}}</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Nombre" [(ngModel)]="user.name">
+    <mat-icon matPrefix svgIcon="account-circle"></mat-icon>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Usuario" [(ngModel)]="user.username">
+    <mat-icon matPrefix svgIcon="account-circle"></mat-icon>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [type]="(showPassword) ? 'text' : 'password'" placeholder="Contraseña" [(ngModel)]="user.password">
+    <mat-icon matPrefix svgIcon="textbox-password"></mat-icon>
+    <mat-icon *ngIf="!showPassword" (click)="toggleShowPassword()" class="pointer" matSuffix svgIcon="eye"></mat-icon>
+    <mat-icon *ngIf="showPassword" (click)="toggleShowPassword()" class="pointer" matSuffix svgIcon="eye-off"></mat-icon>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="number" min="-1" placeholder="Edad" [(ngModel)]="user.age">
+    <mat-icon matPrefix svgIcon="calendar-blank"></mat-icon>
+  </mat-form-field>
+  <mat-select [(ngModel)]="user.state">
+    <mat-option *ngFor="let state of states" [value]="state[2]">{{state[1]}}</mat-option>
+  </mat-select>
+  <mat-select [(ngModel)]="user.category">
+    <mat-option *ngFor="let category of categories" [value]="category[2]">{{category[1]}}</mat-option>
+  </mat-select>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Email" [(ngModel)]="user.email">
+    <mat-icon matPrefix svgIcon="at"></mat-icon>
+  </mat-form-field>
+  <mat-form-field>
+    <input #phone matInput type="text" placeholder="Teléfono" [(ngModel)]="user.phone" maxlength="8" (input)="isValidPhone(phone)">
+    <mat-icon matPrefix svgIcon="phone"></mat-icon>
+    <span matPrefix>+53</span>
+    <mat-hint>{{user.phone.length}}/8</mat-hint>
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      matInput
+      type="text"
+      placeholder="Provincia"
+      [(ngModel)]="user.province"
+      [matAutocomplete]="auto"
+      [formControl]="myControl">
+    <mat-icon matPrefix svgIcon="map-marker"></mat-icon>
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-option *ngFor="let province of filteredProvinces | async" [value]="province">{{province}}</mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onNoClick()">Calcelar</button>
+  <button mat-raised-button [mat-dialog-close]="result" cdkFocusInitial>
+    <mat-icon matPrefix svgIcon="content-save"></mat-icon>{{action}}
+  </button>
+</div>

@@ -1,0 +1,19 @@
+<div class="container">
+  <mat-card>
+    <mat-card-title>{{title}}</mat-card-title>
+    <span *ngIf="error" class="error">{{errorMsg}}</span>
+    <form #f="ngForm" (ngSubmit)="login(f.value)">
+      <mat-form-field>
+        <input matInput ngModel type="text" name="username" placeholder="{{userPlaceholder}}" required autofocus>
+        <mat-icon matSuffix svgIcon="account-circle"></mat-icon>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput ngModel type="password" name="password" placeholder="{{passwordPlaceholder}}" required>
+        <mat-icon matSuffix svgIcon="textbox-password"></mat-icon>
+      </mat-form-field>
+      <div class="btn-container">
+        <button type="submit" mat-flat-button color="accent">{{enterLabel}}</button>
+      </div>
+    </form>
+  </mat-card>
+</div>

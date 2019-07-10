@@ -1,0 +1,32 @@
+.container {
+  margin-top: 150px;
+  margin-left: 20px;
+  margin-right: 20px;
+
+  h1 {
+    font-size: 4em;
+    text-transform: uppercase;
+  }
+
+  table {
+    width: 100%;
+    margin-top: 20px;
+
+    .element-row {
+      cursor: default;
+    }
+  }
+
+  mat-spinner {
+    margin: 0 auto;
+  }
+
+  button {
+    margin-right: 5px;
+
+    mat-icon {
+      margin: 5px;
+    }
+  }
+
+}

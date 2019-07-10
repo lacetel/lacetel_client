@@ -1,0 +1,35 @@
+<nav [class.scrolled]="scrollMode">
+  <ul class="navbar-nav mr-auto">
+    <ng-container *ngFor="let link of links">
+      <li class="nav-item" *ngIf="isVisible(link)">
+        <button *ngIf="link.childs.length > 0" mat-button [matMenuTriggerFor]="main_menu" routerLinkActive="link-active">
+          <mat-icon matPreffix [svgIcon]="link.icon"></mat-icon>
+          {{link.content}}
+        </button>
+        <button *ngIf="!(link.childs.length > 0)" mat-button routerLinkActive="link-active" routerLink="{{link.route}}">
+          <mat-icon matPreffix [svgIcon]="link.icon"></mat-icon>
+          {{link.content}}
+        </button>
+        <mat-menu #main_menu="matMenu">
+          <button mat-menu-item *ngFor="let item of link.childs" routerLink="{{item.route}}">
+            <mat-icon matPreffix [svgIcon]="item.icon"></mat-icon>
+            {{ item.content }}
+          </button>
+        </mat-menu>
+      </li>
+    </ng-container>
+    <li class="nav-item" *ngIf="isVisible({ reqlogin: true })">
+      <button mat-button routerLinkActive="link-active" (click)="logout()">
+        <mat-icon matPreffix svgIcon="logout"></mat-icon>
+        Salir
+      </button>
+    </li>
+    <ng-container *ngIf="isLoggedIn">
+      <li class="nav-item">
+        <button mat-button routerLink="/profile">
+          <mat-icon matPreffix svgIcon="account"></mat-icon> Perfil
+        </button>
+      </li>
+    </ng-container>
+  </ul>
+</nav>

@@ -1,0 +1,28 @@
+$canvas_height: 700px;
+
+.container {
+  margin-top: 150px;
+  padding: 0px 20px;
+
+  td {
+    padding: 10px;
+  }
+
+  canvas {
+    height: $canvas_height;
+    max-height: $canvas_height;
+    margin-top: 50px;
+    background-color: white;
+    padding: 5px;
+    border-radius: 3px;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  mat-select {
+    width: 80px;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+    padding: 10px;
+    margin-right: 10px;
+    background-color: white;
+  }
+}

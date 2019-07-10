@@ -1,0 +1,23 @@
+<div class="container">
+  <mat-card>
+    <mat-card-title>Registrarse</mat-card-title>
+    <span *ngIf="error" class="error">{{errorMsg}}</span>
+    <form #f="ngForm" (ngSubmit)="register(f, f.value)">
+      <mat-form-field>
+        <input matInput ngModel type="email" name="email" placeholder="Correo" required>
+        <mat-icon matSuffix svgIcon="account-circle"></mat-icon>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput ngModel type="password" name="password1" placeholder="Contraseña" required>
+        <mat-icon matSuffix svgIcon="textbox-password"></mat-icon>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput ngModel type="password" name="password2" placeholder="Verificar contraseña" required>
+        <mat-icon matSuffix svgIcon="textbox-password"></mat-icon>
+      </mat-form-field>
+      <div class="btn-container">
+        <button type="submit" mat-flat-button color="accent">Crear cuenta</button>
+      </div>
+    </form>
+  </mat-card>
+</div>
