@@ -3,13 +3,13 @@ import { SensorService } from 'src/app/services/sensor.service';
 import { trigger, state, transition, style, animate } from '@angular/animations';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { AddSensorDialogComponent } from '../add-sensor-dialog/add-sensor-dialog.component';
+// import moment = require('moment');
 
 export interface Sensor {
   id: string;
   lat: number;
   lon: number;
-  val?: number;
-  lastSeen?: number;
+  //time: string;
   editing?: boolean;
   auth?: boolean;
 }
@@ -65,7 +65,7 @@ export class SensoresComponent implements OnInit {
     private sensorService: SensorService,
     private dialog: MatDialog) {
 
-    this.columns = [ 'id', 'lat', 'lon', 'val', 'lastSeen' ];
+    this.columns = [ 'id', 'lat', 'lon', 'time' ];
 
     this.sensors = [];
 
@@ -192,6 +192,7 @@ export class SensoresComponent implements OnInit {
       id: '',
       lat: 0,
       lon: 0,
+	  //time: '',
       auth: true
     };
 
@@ -201,7 +202,10 @@ export class SensoresComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if ( result ) {
-        sensor.id = result;
+		  console.log(result)
+        sensor.id = result.id;
+		sensor.lat = result.lat;
+		sensor.lon = result.lon;
         this.sensors = this.sensors.concat(sensor);
         this.sensorService.addSensor(result).subscribe({
           error: (err) => {

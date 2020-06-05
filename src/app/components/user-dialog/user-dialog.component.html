@@ -43,13 +43,13 @@
       [matAutocomplete]="auto"
       [formControl]="myControl">
     <mat-icon matPrefix svgIcon="map-marker"></mat-icon>
-    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+    <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let province of filteredProvinces | async" [value]="province">{{province}}</mat-option>
     </mat-autocomplete>
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-raised-button (click)="onNoClick()">Calcelar</button>
+  <button mat-raised-button (click)="onNoClick()">Cancelar</button>
   <button mat-raised-button [mat-dialog-close]="result" cdkFocusInitial>
     <mat-icon matPrefix svgIcon="content-save"></mat-icon>{{action}}
   </button>

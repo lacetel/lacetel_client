@@ -10,20 +10,24 @@ import { Sensor } from '../sensores/sensores.component';
   ]
 })
 export class AddSensorDialogComponent {
-  id: string;
+	newSensor: Sensor; 
   constructor(
     public dialogRef: MatDialogRef<AddSensorDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Sensor) {
-      this.id = '';
+      this.newSensor = {
+		id: '',
+		lat: 0,
+		lon: 0,
+	  };
     }
 
   get idNonEmpty() {
-    return this.id.trim() !== '';
+    return this.newSensor.id.trim() !== '';
   }
-
+  
   close(): void {
     if ( this.idNonEmpty ) {
-      this.dialogRef.close(this.id);
+      this.dialogRef.close(this.newSensor);
     }
   }
 

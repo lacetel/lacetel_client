@@ -1,10 +1,22 @@
 <h1 mat-dialog-title>Agregar sensor</h1>
 <div mat-dialog-content>
-  <mat-form-field>
-    <input matInput (keyup.enter)="close()" [(ngModel)]="id" type="text" placeholder="ID...">
-  </mat-form-field>
+  <div>
+	  <mat-form-field>
+		<input matInput (keyup.enter)="close()" [(ngModel)]="newSensor.id" type="text" placeholder="ID...">
+	  </mat-form-field>
+  </div>
+  <div>
+	  <mat-form-field>
+		<input matInput (keyup.enter)="close()" [(ngModel)]="newSensor.lat" type="number" placeholder="Latitud...">
+	  </mat-form-field>
+  </div>
+  <div>
+	  <mat-form-field>
+		<input matInput (keyup.enter)="close()" [(ngModel)]="newSensor.lon" type="number" placeholder="Longitud...">
+	  </mat-form-field>
+  </div>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button *ngIf="idNonEmpty" [mat-dialog-close]="id" cdkFocusInitial>Ok</button>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button *ngIf="idNonEmpty" mat-button [mat-dialog-close]="newSensor" cdkFocusInitial>Guardar</button>
 </div>

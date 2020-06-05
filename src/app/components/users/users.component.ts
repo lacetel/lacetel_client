@@ -108,17 +108,17 @@ export class UsersComponent implements OnInit {
 
   confirmDelete(user: UserInterface) {
 
-    if ( user.email === this.currentUser.email && false ) {
+    if ( user.email === this.currentUser.email ) {
       Swal.fire({
         title: 'Error',
         text: 'No puedes eliminar tu propio usuario',
-        type: 'error'
+        icon: 'error'
       });
     } else {
       Swal.fire({
         title: 'Eliminar usuario',
         text: 'Desea eliminar este usuario?',
-        type: 'warning',
+        icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Eliminar',
         cancelButtonText: 'Cancelar'

@@ -67,12 +67,12 @@ export const NAVBAR_LINKS = [
     icon: 'account-question',
     childs: []
   },
-  {
-    route: '/tools',
-    content: 'Herramientas',
-    icon: 'screwdriver',
-    childs: []
-  },
+  // {
+  //   route: '/tools',
+  //   content: 'Herramientas',
+  //   icon: 'screwdriver',
+  //   childs: []
+  // },
   {
     route: '/users',
     content: 'Usuarios',
@@ -112,3 +112,5 @@ export const ROUTE_LEVEL = tempRl;
 
 /* tslint:disable */
 export const EMAIL_REGEXP = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+export const HOST = 'https://myhost.com/';

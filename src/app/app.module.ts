@@ -1,6 +1,6 @@
 /// Native modules
 import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, LOCALE_ID } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -32,6 +32,14 @@ import { LoadErrorComponent } from './components/load-error/load-error.component
 import { UserDialogComponent } from './components/user-dialog/user-dialog.component';
 import { AddSensorDialogComponent } from './components/add-sensor-dialog/add-sensor-dialog.component';
 import { AuthInterceptor } from './utils/auth-interceptor';
+
+///spanish Language Modules
+//import { LOCALE_ID, /*NgModule, ErrorHandler*/ } from '@angular/core';
+import {registerLocaleData} from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+
+//register locales/es
+registerLocaleData(localeEs, 'es');
 
 @NgModule({
   declarations: [
@@ -83,7 +91,11 @@ import { AuthInterceptor } from './utils/auth-interceptor';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    }
+    },
+	{ 
+	  provide: LOCALE_ID, 
+	  useValue: 'es' 
+	} 
   ],
   bootstrap: [AppComponent]
 })

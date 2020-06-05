@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, Observer } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { API_HOST_PORT } from '../config/server';
+import { Sensor } from '../components/sensores/sensores.component';
 
 
 @Injectable({
@@ -51,9 +52,9 @@ export class SensorService {
     });
   }
 
-  addSensor(id: string) {
+  addSensor(result: Sensor) {
     // return this.observableFactory(true);
-    return this.http.post(API_HOST_PORT + '/sensor', { id });
+    return this.http.post(API_HOST_PORT + '/sensor', { result });
   }
 
   removeSensor(id: string) {
