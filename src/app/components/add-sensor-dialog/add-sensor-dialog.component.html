@@ -18,5 +18,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancelar</button>
-  <button mat-button *ngIf="idNonEmpty" mat-button [mat-dialog-close]="newSensor" cdkFocusInitial>Guardar</button>
+  <button mat-button *ngIf="idNonEmpty" mat-button [mat-dialog-close]="newSensor" value="location.reload()" cdkFocusInitial>Guardar</button>
 </div>
