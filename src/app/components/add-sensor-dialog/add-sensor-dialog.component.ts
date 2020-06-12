@@ -15,10 +15,10 @@ export class AddSensorDialogComponent {
     public dialogRef: MatDialogRef<AddSensorDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Sensor) {
       this.newSensor = {
-		id: '',
-		lat: 0,
-		lon: 0,
-	  };
+        id: '',
+        lat: 0,
+        lon: 0,
+	    };
     }
 
   get idNonEmpty() {

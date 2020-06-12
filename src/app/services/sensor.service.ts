@@ -54,7 +54,7 @@ export class SensorService {
 
   addSensor(result: Sensor) {
     // return this.observableFactory(true);
-    return this.http.post(API_HOST_PORT + '/sensor', { result });
+    return this.http.post(API_HOST_PORT + '/sensor', result);
   }
 
   removeSensor(id: string) {

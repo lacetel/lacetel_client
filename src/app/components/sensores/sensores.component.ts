@@ -9,7 +9,7 @@ export interface Sensor {
   id: string;
   lat: number;
   lon: number;
-  //time: string;
+  date?: Date;
   editing?: boolean;
   auth?: boolean;
 }
@@ -200,17 +200,21 @@ export class SensoresComponent implements OnInit {
       data: sensor
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result: Sensor) => {
       if ( result ) {
-		  console.log(result)
         sensor.id = result.id;
-		sensor.lat = result.lat;
-		sensor.lon = result.lon;
+        sensor.lat = result.lat;
+        sensor.lon = result.lon;
         this.sensors = this.sensors.concat(sensor);
-        this.sensorService.addSensor(result).subscribe({
+        this.sensorService.addSensor(sensor).subscribe({
+          next: (s: Sensor) => {
+            let idx = this.sensors.indexOf(sensor);
+            this.sensors[idx] = s;
+          },
           error: (err) => {
             console.log('sensores.component addSensor ERROR: ', err);
-            this.sensors.pop();
+            let idx = this.sensors.indexOf(sensor);
+            this.sensors.splice(idx, 1);
           }
         });
       }
