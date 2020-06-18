@@ -7,9 +7,10 @@ import { AddSensorDialogComponent } from '../add-sensor-dialog/add-sensor-dialog
 
 export interface Sensor {
   id: string;
+  //host?: 'WEB'; 
   lat: number;
   lon: number;
-  date?: Date;
+  date?: Date; 
   editing?: boolean;
   auth?: boolean;
 }
@@ -65,7 +66,7 @@ export class SensoresComponent implements OnInit {
     private sensorService: SensorService,
     private dialog: MatDialog) {
 
-    this.columns = [ 'id', 'lat', 'lon', 'time' ];
+    this.columns = [ 'id', 'lat', 'lon', 'date' ];
 
     this.sensors = [];
 
@@ -192,7 +193,6 @@ export class SensoresComponent implements OnInit {
       id: '',
       lat: 0,
       lon: 0,
-	  //time: '',
       auth: true
     };
 
@@ -225,6 +225,7 @@ export class SensoresComponent implements OnInit {
   authorize(sensor: Sensor) {
 
     sensor.auth = true;
+	sensor.date = new Date();
 
     this.sensorService.authorizeSensor(sensor.id)
       .subscribe({
