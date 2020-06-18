@@ -7,7 +7,7 @@ import { AddSensorDialogComponent } from '../add-sensor-dialog/add-sensor-dialog
 
 export interface Sensor {
   id: string;
-  //host?: 'WEB'; 
+  host?: 'WEB'; 
   lat: number;
   lon: number;
   date?: Date; 
