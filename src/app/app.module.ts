@@ -30,7 +30,8 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { UsersComponent } from './components/users/users.component';
 import { LoadErrorComponent } from './components/load-error/load-error.component';
 import { UserDialogComponent } from './components/user-dialog/user-dialog.component';
-import { AddSensorDialogComponent } from './components/add-sensor-dialog/add-sensor-dialog.component';
+import { AddSensorDialogComponent, AddConfirmDialogComponent } from './components/add-sensor-dialog/add-sensor-dialog.component';
+import { EditSensorDialogComponent } from './components/edit-sensor-dialog/edit-sensor-dialog.component';
 import { AuthInterceptor } from './utils/auth-interceptor';
 
 ///spanish Language Modules
@@ -54,6 +55,7 @@ registerLocaleData(localeEs, 'es');
     RegisterComponent,
     OpenmapComponent,
     ConfirmationDialogComponent,
+    AddConfirmDialogComponent,
     AboutUsComponent,
     ToolsComponent,
     PerfilComponent,
@@ -62,10 +64,13 @@ registerLocaleData(localeEs, 'es');
     // IconsComponent,
     UserDialogComponent,
     AddSensorDialogComponent,
+	  EditSensorDialogComponent,
   ],
   entryComponents: [
     ConfirmationDialogComponent,
+    AddConfirmDialogComponent,
     AddSensorDialogComponent,
+	  EditSensorDialogComponent,
     UserDialogComponent
   ],
   imports: [

@@ -2,7 +2,9 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { SensorService } from 'src/app/services/sensor.service';
 import { trigger, state, transition, style, animate } from '@angular/animations';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { AddSensorDialogComponent } from '../add-sensor-dialog/add-sensor-dialog.component';
+import { AddSensorDialogComponent, AddConfirmDialogComponent } from '../add-sensor-dialog/add-sensor-dialog.component';
+import { EditSensorDialogComponent } from '../edit-sensor-dialog/edit-sensor-dialog.component';
+// import { logging } from 'protractor';
 // import moment = require('moment');
 
 export interface Sensor {
@@ -18,7 +20,7 @@ export interface Sensor {
 @Component({
   selector: 'app-confirmation-dialog',
   template: `
-  <h1 mat-dialog-title>Estás seguro?</h1>
+  <h3 mat-dialog-title>¿Estás seguro de eliminar...?</h3>
   <div mat-dialog-content>
     <span>Sensor: {{data.id}}</span>
   </div>
@@ -60,6 +62,7 @@ export class SensoresComponent implements OnInit {
 
   columns: {}[];
   sensors: Sensor[];
+  sameIdSensors: Sensor[]; 
   temporalEdition: Sensor;
 
   constructor(
@@ -141,13 +144,41 @@ export class SensoresComponent implements OnInit {
           }
         });
     }
-
   }
 
-  editToggle(sensor: Sensor) {
-    sensor.editing = !sensor.editing;
-    this.temporalEdition.id = sensor.id;
-    if ( !sensor.editing ) {
+  editToggle(oldSensor: Sensor) {
+    const sensor: Sensor = {
+      id: '',
+      lat: 0,
+      lon: 0,
+      auth: true
+    };
+
+    const dialogRef = this.dialog.open(EditSensorDialogComponent, {
+      data: sensor
+    });
+
+    dialogRef.afterClosed().subscribe((result: Sensor) => {
+      if ( result ) {
+		    sensor.id = oldSensor.id;
+        sensor.lat = result.lat;
+        sensor.lon = result.lon;
+        this.sensors = this.sensors.concat(sensor);
+        this.sensorService.addSensor(sensor).subscribe({
+          next: (s: Sensor) => {
+            let idx = this.sensors.indexOf(sensor);
+            this.sensors[idx] = s;
+          },
+          error: (err) => {
+            console.log('sensores.component addSensor ERROR: ', err);
+            let idx = this.sensors.indexOf(sensor);
+            this.sensors.splice(idx, 1);
+          }
+        });
+      }
+    });
+    
+    if ( !sensor.lat || !sensor.lon ) {
       this.cancelEdition(sensor);
     }
   }
@@ -205,18 +236,30 @@ export class SensoresComponent implements OnInit {
         sensor.id = result.id;
         sensor.lat = result.lat;
         sensor.lon = result.lon;
-        this.sensors = this.sensors.concat(sensor);
-        this.sensorService.addSensor(sensor).subscribe({
-          next: (s: Sensor) => {
-            let idx = this.sensors.indexOf(sensor);
-            this.sensors[idx] = s;
-          },
-          error: (err) => {
-            console.log('sensores.component addSensor ERROR: ', err);
-            let idx = this.sensors.indexOf(sensor);
-            this.sensors.splice(idx, 1);
-          }
+        
+        this.sensorService.getSameIdSensors(sensor.id).subscribe((sensorList: Sensor[]) => {
+          this.sameIdSensors = [].concat(sensorList);
+          // console.log('SENSORS', this.sensors);
         });
+    
+        if (this.sameIdSensors.length > 0) {
+          const dialogRef = this.dialog.open(AddConfirmDialogComponent, {
+            data: sensor
+          });
+        }
+          this.sensors = this.sensors.concat(sensor);
+          this.sensorService.addSensor(sensor).subscribe({
+            next: (s: Sensor) => {
+              let idx = this.sensors.indexOf(sensor);
+              this.sensors[idx] = s;
+            },
+            error: (err) => {
+              console.log('sensores.component addSensor ERROR: ', err);
+              let idx = this.sensors.indexOf(sensor);
+              this.sensors.splice(idx, 1);
+            }
+          });
+        
       }
     });
 
@@ -224,17 +267,29 @@ export class SensoresComponent implements OnInit {
 
   authorize(sensor: Sensor) {
 
+    this.temporalEdition.id = sensor.id;
+    this.temporalEdition.lat = sensor.lat;
+    this.temporalEdition.lon = sensor.lon;
+    this.deleteSensor(sensor.id);
+    sensor.id = this.temporalEdition.id;
+    sensor.lat = this.temporalEdition.lat;
+    sensor.lon = this.temporalEdition.lon; 
     sensor.auth = true;
-	sensor.date = new Date();
+	  sensor.date = new Date();
 
-    this.sensorService.authorizeSensor(sensor.id)
+    if (!sensor.lat || !sensor.lon){
+      this.editToggle(sensor);
+    } 
+    else{
+      this.sensorService.authorizeSensor(sensor.id)
       .subscribe({
         error: (err) => {
           console.log('sensores.component authorizeSensor ERROR: ', err);
           sensor.auth = false;
         }
       });
-
+    }
+    
   }
 
 }

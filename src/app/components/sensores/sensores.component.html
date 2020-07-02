@@ -36,14 +36,14 @@
             <button *ngIf="!(element.editing && hasChanged(element))" (click)="editToggle(element)" mat-raised-button>
               <mat-icon matPrefix svgIcon="pencil"></mat-icon> Editar
             </button>
-            <ng-container *ngIf="element.editing && hasChanged(element)">
+            <!-- <ng-container *ngIf="element.editing && hasChanged(element)">
               <button (click)="save(element)" mat-raised-button>
                 <mat-icon matPrefix svgIcon="content-save"></mat-icon> Guardar
               </button>
               <button (click)="cancelEdition(element)" mat-raised-button>
                 <mat-icon matPrefix svgIcon="close"></mat-icon> Cancelar
               </button>
-            </ng-container>
+            </ng-container> -->
             <button (click)="deleteConfirmation(element)" mat-raised-button class="delete">
               <mat-icon matPrefix svgIcon="close"></mat-icon> Eliminar sensor
             </button>
@@ -92,7 +92,7 @@
       <ng-container matColumnDef="expandedDetail">
         <td mat-cell *matCellDef="let element" [attr.colspan]="columns.length">
           <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-            <button *ngIf="!(element.editing && hasChanged(element))" (click)="editToggle(element)" mat-raised-button>
+            <!-- <button *ngIf="!(element.editing && hasChanged(element))" (click)="editToggle(element)" mat-raised-button>
               <mat-icon matPrefix svgIcon="pencil"></mat-icon> Editar
             </button>
             <ng-container *ngIf="element.editing && hasChanged(element)">
@@ -102,7 +102,7 @@
               <button (click)="cancelEdition(element)" mat-raised-button>
                 <mat-icon matPrefix svgIcon="close"></mat-icon> Cancelar
               </button>
-            </ng-container>
+            </ng-container> -->
             <button (click)="authorize(element)" mat-raised-button>
               <mat-icon matPrefix svgIcon="account-check"></mat-icon> Autorizar
             </button>

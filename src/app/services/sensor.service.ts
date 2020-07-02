@@ -45,5 +45,10 @@ export class SensorService {
     // return this.observableFactory(true);
     return this.http.post(API_HOST_PORT + '/authorizeSensor', { id });
   }
+  
+  getSameIdSensors(id: string) {
+
+    return this.http.get(API_HOST_PORT + '/sameIdSensors' + id); 
+  }
 
 }
